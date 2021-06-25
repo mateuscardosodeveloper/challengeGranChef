@@ -31,7 +31,6 @@ class PessoaController extends Controller
         Pessoa::create([
             'name' => request('name'),
             'data_nascimento' => request('data_nascimento'),
-            'genero' => request('genero'),
             'email' => request('email'),
             'senha' => request('senha'),
         ]);
@@ -56,7 +55,6 @@ class PessoaController extends Controller
         $pessoa->update([
             'name' => request('name'),
             'data_nascimento' => request('data_nascimento'),
-            'genero' => request('genero'),
             'email' => request('email'),
             'senha' => request('senha'),
         ]);
