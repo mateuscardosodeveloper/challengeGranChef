@@ -23,3 +23,4 @@ Route::get('/pessoas/create', [PessoaController::class, 'create']);
 Route::get('/pessoas/{pessoa}/edit', [PessoaController::class, 'edit']);
 Route::put('/pessoas/{pessoa}', [PessoaController::class, 'update']);
 Route::delete('/pessoas/{pessoa}', [PessoaController::class, 'delete']);
+Route::get('/pessoas/genero', [PessoaController::class, 'gender']);

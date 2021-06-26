@@ -22,14 +22,16 @@ class PessoaController extends Controller
     public function store()
     {
         request()->validate([
-            'name' => 'required',
+            'nome' => 'required',
+            'sobrenome' => 'required',
             'data_nascimento' => 'required|before:today',
             'email' => 'required',
             'senha' => 'required',
         ]);
 
         Pessoa::create([
-            'name' => request('name'),
+            'nome' => request('nome'),
+            'sobrenome' => request('sobrenome'),
             'data_nascimento' => request('data_nascimento'),
             'email' => request('email'),
             'senha' => request('senha'),
@@ -46,14 +48,16 @@ class PessoaController extends Controller
     public function update(Pessoa $pessoa)
     {
         request()->validate([
-            'name' => 'required',
+            'nome' => 'required',
+            'sobrenome' => 'required',
             'data_nascimento' => 'required|before:today',
             'email' => 'required',
             'senha' => 'required',
         ]);
 
         $pessoa->update([
-            'name' => request('name'),
+            'nome' => request('nome'),
+            'sobrenome' => request('sobrenome'),
             'data_nascimento' => request('data_nascimento'),
             'email' => request('email'),
             'senha' => request('senha'),
@@ -68,5 +72,10 @@ class PessoaController extends Controller
         $pessoa->delete();
 
         return redirect('/pessoas');
+    }
+
+    public function gender(Request $request)
+    {
+        return view('pessoas.gender');
     }
 }

@@ -12,7 +12,8 @@ class Pessoa extends Model
     protected $table = 'pessoas';
 
     protected $fillable = [
-        'name',
+        'nome',
+        'sobrenome',
         'data_nascimento',
         'genero',
         'email',

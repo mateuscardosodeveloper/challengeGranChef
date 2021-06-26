@@ -15,7 +15,8 @@ class CreatePessoasTable extends Migration
     {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
-            $table->string(column:'name');
+            $table->string(column:'nome');
+            $table->string(column:'sobrenome');
             $table->date(column:'data_nascimento');
             $table->enum('genero', ['masculino', 'feminino'])->nullable();
             $table->string(column:'email')->unique();

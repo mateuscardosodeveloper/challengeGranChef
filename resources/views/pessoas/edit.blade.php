@@ -7,8 +7,13 @@
         @csrf
 
         <div class="mb-3">
-            <label class="form-label" for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{$pessoa->name}}">
+            <label class="form-label" for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{$pessoa->nome}}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="sobrenome">Sobrenome</label>
+            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="{{$pessoa->sobrenome}}">
         </div>
         
         <div class="mb-3">
