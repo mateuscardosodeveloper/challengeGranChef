@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pessoa;
-use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class PessoaController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $pessoas = Pessoa::all();
 
@@ -21,11 +22,12 @@ class PessoaController extends Controller
 
     public function store()
     {
+
         request()->validate([
             'nome' => 'required',
             'sobrenome' => 'required',
             'data_nascimento' => 'required|before:today',
-            'email' => 'required',
+            'email' => 'required|unique:pessoas',
             'senha' => 'required',
         ]);
 
@@ -37,7 +39,7 @@ class PessoaController extends Controller
             'senha' => request('senha'),
         ]);
 
-        return redirect('/pessoas');
+        return redirect('/pessoas/genero');
     }
 
     public function edit(Pessoa $pessoa)
@@ -47,11 +49,15 @@ class PessoaController extends Controller
 
     public function update(Pessoa $pessoa)
     {
+
         request()->validate([
             'nome' => 'required',
             'sobrenome' => 'required',
+            'email' => [
+                'required',
+                Rule::unique('pessoas')->ignore($pessoa->id),
+            ],
             'data_nascimento' => 'required|before:today',
-            'email' => 'required',
             'senha' => 'required',
         ]);
 
@@ -63,8 +69,7 @@ class PessoaController extends Controller
             'senha' => request('senha'),
         ]);
 
-
-        return redirect('/pessoas');
+        return redirect('/pessoas/genero');
     }
 
     public function delete(Pessoa $pessoa)
@@ -74,8 +79,27 @@ class PessoaController extends Controller
         return redirect('/pessoas');
     }
 
-    public function gender(Request $request)
+    public function get_gender()
     {
-        return view('pessoas.gender');
+        $pessoas = Pessoa::get();
+
+        foreach ($pessoas as $pessoa) {
+            $url = "https://gender-api.com/get?name={$pessoa->nome}&country=BR&key=sfq5G43wt3BNfABQPjxEsZLDevhqNz9k6GgA";
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $resultado = json_decode(curl_exec($ch));
+
+            echo "Nome: " . $resultado->name . "<br>";
+            if ($resultado->gender == 'male') {
+                $pessoa->update(['genero' => value('Masculino')]);
+            } else if ($resultado->gender == 'female') {
+                $pessoa->update(['genero' => value('Feminino')]);
+            } else {
+                $pessoa->update(['genero' => value('Desconhecido')]);
+            }
+        }
+
+        return redirect('/pessoas');
     }
 }

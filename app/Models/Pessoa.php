@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 class Pessoa extends Model
 {
@@ -20,5 +21,9 @@ class Pessoa extends Model
         'senha',
     ];
 
+    public function setSenhaAttribute($senha)
+    {
+        $this->attributes['senha'] = Hash::make($senha);
+    }
 
 }

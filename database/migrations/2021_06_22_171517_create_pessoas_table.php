@@ -18,7 +18,7 @@ class CreatePessoasTable extends Migration
             $table->string(column:'nome');
             $table->string(column:'sobrenome');
             $table->date(column:'data_nascimento');
-            $table->enum('genero', ['masculino', 'feminino'])->nullable();
+            $table->enum('genero', ['Masculino', 'Feminino', 'Desconhecido'])->nullable();
             $table->string(column:'email')->unique();
             $table->string(column:'senha');
             $table->timestamps();
